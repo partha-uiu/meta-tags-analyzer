@@ -18,7 +18,6 @@ $tags = get_meta_tags('http://www.cricinfo.com/');
         <?php  echo $urlError; ?>
     </form>
 
-    <h1>Hello</h1>
 </div>
 
 
