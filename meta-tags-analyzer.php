@@ -16,6 +16,9 @@ function meta_tags_analyzer_enqueue_scripts(){
 
 }
 
+add_action('wp_enqueue_scripts', 'meta_tags_analyzer_enqueue_scripts');
+
+
 function meta_tags_analyzer() {
 
     include dirname( __FILE__ ) . '/meta-tags-analyzer-shortcode.php';
