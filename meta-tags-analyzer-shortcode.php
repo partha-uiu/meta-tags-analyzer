@@ -2,8 +2,6 @@
 global $urlError;
 $url = isset($_POST['url']) ? $_POST['url']  : (isset($url) ? $url : NULL);
 
-$tags = get_meta_tags('http://www.cricinfo.com/');
-
 ?>
 <div>
     <form action="?" method="POST">
