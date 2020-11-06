@@ -134,7 +134,7 @@ function url_validation(){
     
     echo "<table>";
     echo "<tr >";
-    echo "<th  style=\"text-align: center;\"  colspan=\"2\">Meta tags of:  <span class=\"text-muted\"> $url</span> </th>";
+    echo "<th  style=\"text-align: center;\"  colspan=\"2\">Meta tags of:  <span style=\"color: #776666;\" > $url</span> </th>";
     echo "</tr>";
     echo "<tr>";
     echo "<th>Meta</th>";
