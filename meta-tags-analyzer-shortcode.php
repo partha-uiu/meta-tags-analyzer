@@ -1,6 +1,7 @@
 <?php 
 global $urlError;
 $url = isset($_POST['url']) ? $_POST['url']  : (isset($url) ? $url : NULL);
+$recaptchaKey = get_option( 'recaptcha_key' );
 ?>
 <style>
 .f-b {
@@ -9,7 +10,7 @@ $url = isset($_POST['url']) ? $_POST['url']  : (isset($url) ? $url : NULL);
 </style>    
 <div>
     <form action="?" method="POST">
-        <div class="g-recaptcha" data-sitekey="<?php echo $recaptchaKey?>"></div>
+        <div class="g-recaptcha" data-sitekey="<?php echo $recaptchaKey;?>"></div>
         <br/>
         <input type="submit" value="Submit">
     </form>
