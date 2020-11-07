@@ -140,6 +140,9 @@ function url_validation(){
     }
 
     $url = $_POST['url'];
+    if(empty($url)){
+        return;
+    }
     $tags = get_meta_tags($url);
     
     echo "<table>";
