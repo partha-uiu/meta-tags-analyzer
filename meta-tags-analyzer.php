@@ -7,7 +7,6 @@
 * Author: Partha
 * Author URI: 
 **/
-define( 'WP_DEBUG', true );
 
 if ( ! defined( 'WPINC' ) ) {
 	die;
@@ -42,17 +41,6 @@ function meta_tags_analyzer_scripts_and_styles(){
 }
 
 add_action('wp_enqueue_scripts','meta_tags_analyzer_scripts_and_styles');
-
-
-
-
-
-
-
-
-
-
-
 
 function key_input_page(){
     global $recaptchaKeyError;
@@ -131,49 +119,47 @@ function url_validation(){
 
     global  $urlError;
 
-        
-    
-        if (isset($_POST['url'])) {
-            if (empty($_POST['url'])) {
-                $urlError = 'Please enter your url';
-            } 
-            else {
-                $url = $_POST['url'];
-                if (!filter_var($url, FILTER_VALIDATE_URL)) {
-                    $urlError = 'Invalid URL';
-                
-                }    
-            }
+    if (isset($_POST['url'])) {
+        if (empty($_POST['url'])) {
+            $urlError = 'Please enter your url';
+        } 
+        else {
+            $url = $_POST['url'];
+            if (!filter_var($url, FILTER_VALIDATE_URL)) {
+                $urlError = 'Invalid URL';
+            
+            }    
         }
-
-        if(isset($urlError)){
-            $urlError = "<span class=\"text-danger\">$urlError</span>";
-            return;
-        } else{
-            $urlError ='';
-        }
-
-        $url = $_POST['url'];
-        $tags = get_meta_tags($url);
-        
-        echo "<table>";
-        echo "<tr >";
-        echo "<th  class=\"text-center\" colspan=\"2\">Meta tags of:  <span class=\"text-muted\" > $url</span> </th>";
-        echo "</tr>";
-        echo "<tr>";
-        echo "<th>Meta</th>";
-        echo "<th>Description</th>";
-        echo "</tr>";
-
-        foreach($tags as $key => $value) {
-            echo "<tr>";
-            echo "<td>".$key."</td>";
-            echo "<td>".$value."</td>";
-            echo "</tr>";
-        }
-
-        echo "</table>";
     }
+
+    if(isset($urlError)){
+        $urlError = "<span class=\"text-danger\">$urlError</span>";
+        return;
+    } else{
+        $urlError ='';
+    }
+
+    $url = $_POST['url'];
+    $tags = get_meta_tags($url);
+    
+    echo "<table>";
+    echo "<tr >";
+    echo "<th  class=\"text-center\" colspan=\"2\">Meta tags of:  <span class=\"text-muted\" > $url</span> </th>";
+    echo "</tr>";
+    echo "<tr>";
+    echo "<th>Meta</th>";
+    echo "<th>Description</th>";
+    echo "</tr>";
+
+    foreach($tags as $key => $value) {
+        echo "<tr>";
+        echo "<td>".$key."</td>";
+        echo "<td>".$value."</td>";
+        echo "</tr>";
+    }
+
+    echo "</table>";
+}
 
 
 
