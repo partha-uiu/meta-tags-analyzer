@@ -3,23 +3,16 @@ global $urlError;
 $url = isset($_POST['url']) ? $_POST['url']  : (isset($url) ? $url : NULL);
 $recaptchaKey = get_option( 'recaptcha_key' );
 ?>
-<style>
-.f-b {
-  font-weight: bold;
-}
-</style>    
+    
 <div>
-    <form action="?" method="POST">
-        <div class="g-recaptcha" data-sitekey="<?php echo $recaptchaKey;?>"></div>
-        <br/>
-        <input type="submit" value="Submit">
-    </form>
-
+    <div class="g-recaptcha" data-sitekey="<?php echo $recaptchaKey;?>" data-callback="enableSubmitBtn"></div>
+    <br/>
     <form action="" method="post">
    
-         <span class="f-b "> Enter a url: </span><input type="text" name="url" value="<?php echo $url; ?>">
-        <?php echo (isset($urlError))? $urlError : NULL; ?> <br/>
-        <input type="submit" value="Submit" name="meta_tag_analyzer">
+        <span class="f-b "> Enter an url: </span><input type="text" name="url" value="<?php echo $url; ?>">
+        <br />
+        <?php echo (isset($urlError) &&  isset($_POST['url']))? $urlError : NULL; ?> <br/>
+        <input type="submit" class="btn disable-btn" id="submitUrl" value="Submit" name="meta_tag_analyzer"  disabled="disabled">
         
     </form>
 

@@ -15,7 +15,7 @@ if ( ! defined( 'WPINC' ) ) {
 
 
 //add options page
-// Add user input page for name and value
+// Add user input page for recaptcha key
 
 add_action('admin_menu', 'meta_tag_analyzer_options_page');
 
@@ -29,7 +29,30 @@ function meta_tag_analyzer_options_page() {
 function load_admin_style() {
     wp_register_style( 'custom_wp_admin_css', plugin_dir_url( __FILE__ ) . 'css/styles.css', false, '1.0.0' );
     wp_enqueue_style( 'custom_wp_admin_css' );
-  }
+}
+
+
+function meta_tags_analyzer_scripts_and_styles(){
+
+    wp_register_script ( 'recaptcha-btn', plugins_url ('js/recaptcha-btn.js', __FILE__ ),array('jquery'));
+    wp_enqueue_script('recaptcha-btn');
+
+    wp_register_style( 'custom-css', plugins_url ( 'css/custom-style.css', __FILE__ ));
+    wp_enqueue_style( 'custom-css' );
+}
+
+add_action('wp_enqueue_scripts','meta_tags_analyzer_scripts_and_styles');
+
+
+
+
+
+
+
+
+
+
+
 
 function key_input_page(){
     global $recaptchaKeyError;
@@ -44,7 +67,7 @@ function key_input_page(){
             <label for="data-key">Data Key</label>
             <input type="text" id="data-key" name="key" value='{$recaptchaKey}' placeholder="Data Key . . .">
             {$recaptchaKeyError}
-            <input type="submit" value="Save">
+            <input type="submit" value="Save" name="save_settings">
            
         </form>
     </div>
@@ -57,33 +80,36 @@ add_action('admin_init', 'captcha_key_validation');
 //End user input page
 function captcha_key_validation(){
     global $recaptchaKeyError;
-   
-    if (isset($_POST['key'])) {
-        if(empty($_POST['key'])) {
-                $recaptchaKeyError = 'Recaptcha Key name must be filled';
+    if(isset($_POST['save_settings'])){
+
+        if (isset($_POST['key'])) {
+            if(empty($_POST['key'])) {
+                    $recaptchaKeyError = 'Recaptcha Key name must be filled';
+            }
         }
-    }
 
-    if(isset($recaptchaKeyError)){
-        $recaptchaKeyError = "<span class=\"text-danger\">$recaptchaKeyError</span>";
-    }
+        if(isset($recaptchaKeyError)){
+            $recaptchaKeyError = "<span class=\"text-danger\">$recaptchaKeyError</span>";
+        }
 
-    if(isset($recaptchaKeyError)){
-        return;
-    }
+        if(isset($recaptchaKeyError)){
+            return;
+        }
 
-   $recaptchaKey = $_POST['key'];
-   $checkExistingKey = get_option('recaptcha_key');
-  
+        $recaptchaKey = $_POST['key'];
+        $checkExistingKey = get_option('recaptcha_key');
+        
 
-   if($checkExistingKey) {
-    update_option( 'recaptcha_key', $recaptchaKey );
-   }else {
-    add_option( 'recaptcha_key', $recaptchaKey, '', 'yes' ); 
-   }
+        if($checkExistingKey) {
+            update_option( 'recaptcha_key', $recaptchaKey );
+        }else {
+            add_option( 'recaptcha_key', $recaptchaKey ); 
+        }
+    } 
 }
 
 
+add_action( 'wp_enqueue_scripts', 'meta_tags_analyzer_enqueue_scripts' );
 
 function meta_tags_analyzer_enqueue_scripts(){
 
@@ -105,51 +131,50 @@ function url_validation(){
 
     global  $urlError;
 
-    if(!isset($_POST['meta_tag_analyzer'])){
-        return;
-    }
-
-    if (isset($_POST['url'])) {
-        if (empty($_POST['url'])) {
-            $urlError = 'Please enter your url';
-        } 
-        else {
-            $url = $_POST['url'];
-            if (!filter_var($url, FILTER_VALIDATE_URL)) {
-                $urlError = 'Invalid URL';
-            
-            }    
-        }
-    }
-
-    if(isset($urlError)){
-        $urlError = "<span class=\"text-danger\">$urlError</span>";
-        return;
-    } else{
-        $urlError ='';
-    }
-
-    $url = $_POST['url'];
-    $tags = get_meta_tags($url);
+        
     
-    echo "<table>";
-    echo "<tr >";
-    echo "<th  style=\"text-align: center;\"  colspan=\"2\">Meta tags of:  <span style=\"color: #776666;\" > $url</span> </th>";
-    echo "</tr>";
-    echo "<tr>";
-    echo "<th>Meta</th>";
-    echo "<th>Description</th>";
-    echo "</tr>";
+        if (isset($_POST['url'])) {
+            if (empty($_POST['url'])) {
+                $urlError = 'Please enter your url';
+            } 
+            else {
+                $url = $_POST['url'];
+                if (!filter_var($url, FILTER_VALIDATE_URL)) {
+                    $urlError = 'Invalid URL';
+                
+                }    
+            }
+        }
 
-    foreach($tags as $key => $value) {
-        echo "<tr>";
-        echo "<td>".$key."</td>";
-        echo "<td>".$value."</td>";
+        if(isset($urlError)){
+            $urlError = "<span class=\"text-danger\">$urlError</span>";
+            return;
+        } else{
+            $urlError ='';
+        }
+
+        $url = $_POST['url'];
+        $tags = get_meta_tags($url);
+        
+        echo "<table>";
+        echo "<tr >";
+        echo "<th  class=\"text-center\" colspan=\"2\">Meta tags of:  <span class=\"text-muted\" > $url</span> </th>";
         echo "</tr>";
-      }
+        echo "<tr>";
+        echo "<th>Meta</th>";
+        echo "<th>Description</th>";
+        echo "</tr>";
 
-    echo "</table>";
+        foreach($tags as $key => $value) {
+            echo "<tr>";
+            echo "<td>".$key."</td>";
+            echo "<td>".$value."</td>";
+            echo "</tr>";
+        }
 
-}
+        echo "</table>";
+    }
+
+
 
 add_action('template_redirect', 'url_validation');
