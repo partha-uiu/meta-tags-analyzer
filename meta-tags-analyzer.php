@@ -50,12 +50,12 @@ function key_input_page(){
     echo <<<HTML
     <h3>Please enter the Data Key for recaptcha</h3>
 
-    <div class="container">
+    <div class="mt-container">
         <form action="" method="post">
             <label for="data-key">Data Key</label>
-            <input type="text" id="data-key" name="key" value='{$recaptchaKey}' placeholder="Data Key . . .">
+            <input class="mt-text" type="text" id="data-key" name="key" value='{$recaptchaKey}' placeholder="Data Key . . .">
             {$recaptchaKeyError}
-            <input type="submit" value="Save" name="save_settings">
+            <input class="mt-submit" type="submit" value="Save" name="save_settings">
            
         </form>
     </div>
@@ -115,55 +115,5 @@ function meta_tags_analyzer() {
 add_shortcode( 'meta_tags_analyzer', 'meta_tags_analyzer');
 
 
-function url_validation(){
-
-    global  $urlError;
-
-    if (isset($_POST['url'])) {
-        if (empty($_POST['url'])) {
-            $urlError = 'Please enter your url';
-        } 
-        else {
-            $url = $_POST['url'];
-            if (!filter_var($url, FILTER_VALIDATE_URL)) {
-                $urlError = 'Invalid URL';
-            
-            }    
-        }
-    }
-
-    if(isset($urlError)){
-        $urlError = "<span class=\"text-danger\">$urlError</span>";
-        return;
-    } else{
-        $urlError ='';
-    }
-
-    $url = $_POST['url'];
-    if(empty($url)){
-        return;
-    }
-    $tags = get_meta_tags($url);
-    
-    echo "<table>";
-    echo "<tr >";
-    echo "<th  class=\"text-center\" colspan=\"2\">Meta tags of:  <span class=\"text-muted\" > $url</span> </th>";
-    echo "</tr>";
-    echo "<tr>";
-    echo "<th>Meta</th>";
-    echo "<th>Description</th>";
-    echo "</tr>";
-
-    foreach($tags as $key => $value) {
-        echo "<tr>";
-        echo "<td>".$key."</td>";
-        echo "<td>".$value."</td>";
-        echo "</tr>";
-    }
-
-    echo "</table>";
-}
 
 
-
-add_action('template_redirect', 'url_validation');

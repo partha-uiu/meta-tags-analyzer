@@ -14,7 +14,8 @@
 .text-center {
     text-align: center;
 }
-input[type=text], select {
+
+.mt-text {
     width: 350px  !important;
     border: 1px solid #ccc  !important;
     border-radius: 4px  !important;
@@ -25,7 +26,7 @@ input[type=text], select {
     display:inline-block  !important;
 }
 
-.btn {
+.mt-btn {
     display: inline-block  !important;
     font-weight: 400  !important;
     text-align: center  !important;
@@ -43,21 +44,34 @@ input[type=text], select {
     transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out  !important;
 }
 
-.submit-btn{
+.mt-submit-btn{
     color: #fff !important;
     background-color: #007bff !important;
     border-color: #007bff !important;
     cursor: pointer !important;
-    width: 100px !important;;
-    height: 40px !important;;
+    width: 100px !important;
+    height: 40px !important;
+    padding: 2px !important;
 }
 
 
-.disable-btn{
-    color: black !important;
+.mt-disable-btn{
+    color: #ccc !important;
     background-color: dimgray !important;
     border-color: dimgray !important;
     cursor: not-allowed !important;
-    width: 100px !important;;
-    height: 40px !important;;
+    width: 100px !important;
+    height: 40px !important;
+    padding: 2px !important;
+}
+
+
+.mt-tag-table {
+    margin-top: 50px !important;
+    width: 980px !important;
+}
+
+.mt-w-140{
+    width: 140px;
+    text-align: center !important;
 }
