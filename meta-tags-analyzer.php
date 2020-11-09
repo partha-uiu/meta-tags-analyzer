@@ -2,7 +2,7 @@
 /**
 * Plugin Name: Meta Tags Analyzer
 * Plugin URI:
-* Description: This is a plugin for capture the meta tags of a website
+* Description: Display all the meta tags of a website
 * Version: 1.0
 * Author: Partha
 * Author URI: 
