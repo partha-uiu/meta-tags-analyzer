@@ -115,5 +115,33 @@ function meta_tags_analyzer() {
 add_shortcode( 'meta_tags_analyzer', 'meta_tags_analyzer');
 
 
+function url_validation(){
+
+    global  $urlError;
+
+    if (isset($_POST['url'])) {
+        if (empty($_POST['url'])) {
+            $urlError = 'Please provide an url ! ';
+        } 
+        else {
+            $url = $_POST['url'];
+            if (!filter_var($url, FILTER_VALIDATE_URL)) {
+                $urlError = 'Please provide a valid url !';
+            
+            }    
+        }
+    }
+
+    if(isset($urlError)){
+        $urlError = "<span class=\"text-danger\">$urlError</span>";
+        return;
+    } else{
+        $urlError ='';
+    }
 
 
+}
+
+
+
+add_action('template_redirect', 'url_validation');
