@@ -117,28 +117,24 @@ add_shortcode( 'meta_tags_analyzer', 'meta_tags_analyzer');
 
 function url_validation(){
 
-    global  $urlError;
+    global  $urlError ;
 
     if (isset($_POST['url'])) {
+        
         if (empty($_POST['url'])) {
             $urlError = 'Please provide an url ! ';
+            return;
         } 
-        else {
-            $url = $_POST['url'];
-            if (!filter_var($url, FILTER_VALIDATE_URL)) {
-                $urlError = 'Please provide a valid url !';
-            
-            }    
-        }
+        elseif (filter_var($_POST['url'], FILTER_VALIDATE_URL)===false) {
+            $urlError = 'Please provide a valid url !';
+            return;
+        }  
     }
 
     if(isset($urlError)){
-        $urlError = "<span class=\"text-danger\">$urlError</span>";
+        $urlError = "<span class=\"mt-text-danger\">$urlError</span>";
         return;
-    } else{
-        $urlError ='';
-    }
-
+    } 
 
 }
 
