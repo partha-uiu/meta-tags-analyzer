@@ -109,7 +109,7 @@ function meta_tags_analyzer() {
 
     include dirname( __FILE__ ) . '/meta-tags-analyzer-shortcode.php';
     wp_enqueue_script('recaptcha-js');
-
+    wp_enqueue_style( 'custom-css' );
 } 
 
 add_shortcode( 'meta_tags_analyzer', 'meta_tags_analyzer');
@@ -123,11 +123,11 @@ function url_validation(){
         
         if (empty($_POST['url'])) {
             $urlError = 'Please provide an url ! ';
-            return;
+            
         } 
         elseif (filter_var($_POST['url'], FILTER_VALIDATE_URL)===false) {
             $urlError = 'Please provide a valid url !';
-            return;
+            
         }  
     }
 
