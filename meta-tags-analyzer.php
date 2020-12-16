@@ -132,7 +132,8 @@ function url_validation(){
     }
 
     if(isset($urlError)){
-        $urlError = "<span class=\"mt-text-danger\">$urlError</span>";
+        $urlError = "<span  style=\"margin-left: 120px;
+        font-weight: 600;\" class=\"mt-text-danger\">$urlError</span>";
         return;
     } 
 
