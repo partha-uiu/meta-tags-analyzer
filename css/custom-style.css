@@ -209,3 +209,7 @@
 .mt-pl-150 {
     padding-left: 150px;
 }
+
+.f-w-bold {
+    font-weight: bold !important;
+  }

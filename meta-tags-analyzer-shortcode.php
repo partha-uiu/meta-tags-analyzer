@@ -42,7 +42,7 @@ $recaptchaKey = get_option( 'recaptcha_key' );
         $tags = get_meta_tags($url);
         preg_match("/<title>(.+)<\/title>/siU", file_get_contents($url), $matches);
         $title = $matches[1];
-        echo "<table class=\"table table-striped\">";
+        echo "<table class=\"table table-striped meta-table\">";
         echo "<tr class=\"th-color-meta\" >";
         echo "<th  class=\"text-center\" colspan=\"2\">Meta tag analysis for <span> $url</span> </th>";
         echo "</tr>";
@@ -51,17 +51,17 @@ $recaptchaKey = get_option( 'recaptcha_key' );
         echo "<th>Meta Value</th>";
         echo "</tr>";
         echo "<tr>";
-        echo "<td>Title</td>";
+        echo "<td class=\"f-w-bold\">Title</td>";
         echo "<td>".$title."</td>";
         echo "</tr>";
         echo "<tr>";
-        echo "<td>Description</td>";
+        echo "<td class=\"f-w-bold\">Description</td>";
         echo "<td>".$tags["description"]."</td>";
         echo "</tr>";
         foreach($tags as $key => $value) {
             
                 echo "<tr>";
-                echo "<td>".$key."</td>";
+                echo "<td class=\"f-w-bold\">".$key."</td>";
                 echo "<td>".$value."</td>";
                 echo "</tr>";
             
